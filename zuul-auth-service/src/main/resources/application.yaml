@@ -1,0 +1,35 @@
+server:
+  port: 8072
+  servlet:
+    context-path: /gateway
+
+spring:
+  application:
+    name: gateway
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth
+    username: postgres
+    password: root
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          temp:
+            use_jdbc_metadata_defaults: false
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka
+  instance:
+    prefer-ip-address: true
+
+zuul:
+  sensitive-headers: Cookie
