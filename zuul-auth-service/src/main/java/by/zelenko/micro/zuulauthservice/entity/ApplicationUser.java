@@ -20,7 +20,7 @@ public class ApplicationUser implements AbstractEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     private Long id;
     @NotNull(message = "The field 'username' is mandatory")

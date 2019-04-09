@@ -2,8 +2,8 @@ package by.zelenko.micro.zuulauthservice.Security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,26 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import static by.zelenko.micro.zuulauthservice.property.SecurityConstants.*;
 
 @Slf4j
 public class JwtAutorizationFilter extends BasicAuthenticationFilter {
 
-
-
     public JwtAutorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        log.info("Попытка получить хедэр");
+        log.info("Попытка получить хедэр" + request.getHeader(HEADER_STRING));
         String header = request.getHeader(HEADER_STRING);
-        log.info("Получиди хедэр");
+        log.info("Получили хедэр " + header);
         if(header == null || !header.startsWith(TOKEN_PREFIX)){
             chain.doFilter(request, response);
             return;
@@ -47,12 +45,12 @@ public class JwtAutorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        log.info("HEader get " + token);
+        log.info("Header get " + token);
         if (token != null) {
             log.info("try verify token");
             String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
                     .build()
-                    .verify(token.replace(HEADER_STRING, ""))
+                    .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
