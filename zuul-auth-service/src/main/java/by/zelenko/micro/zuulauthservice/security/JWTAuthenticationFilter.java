@@ -1,4 +1,4 @@
-package by.zelenko.micro.zuulauthservice.Security;
+package by.zelenko.micro.zuulauthservice.security;
 
 import by.zelenko.micro.zuulauthservice.entity.ApplicationUser;
 import com.auth0.jwt.JWT;
@@ -67,4 +67,3 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("created token is done");
     }
 }
-

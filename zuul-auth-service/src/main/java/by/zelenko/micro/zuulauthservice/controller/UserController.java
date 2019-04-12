@@ -1,4 +1,4 @@
-package by.zelenko.micro.zuulauthservice.Controller;
+package by.zelenko.micro.zuulauthservice.controller;
 
 import by.zelenko.micro.zuulauthservice.entity.ApplicationUser;
 import by.zelenko.micro.zuulauthservice.repository.ApplicationUserRepository;
@@ -21,14 +21,9 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-/*    public UserController(ApplicationUserRepository applicationUserRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-        this.applicationUserRepository = applicationUserRepository;
-    }*/
-
     @PostMapping("/signup")
     public void signUp(@RequestBody ApplicationUser applicationUser){
-        log.info("seting password");
+        log.info("setting password");
         applicationUser.setPassword(passwordEncoder.encode(applicationUser.getPassword()));
         log.info("password was setting, try save user in DB");
         applicationUserRepository.save(applicationUser);
