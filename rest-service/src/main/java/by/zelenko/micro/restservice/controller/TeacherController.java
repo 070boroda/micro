@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RestController
-@RequestMapping("/")
+//@RequestMapping("/")
 public class TeacherController {
 
     @Autowired
@@ -67,4 +67,3 @@ public class TeacherController {
         return new ResponseEntity<Teacher>(HttpStatus.NO_CONTENT);
     }
 }
-
