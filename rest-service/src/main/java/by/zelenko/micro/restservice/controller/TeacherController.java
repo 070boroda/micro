@@ -4,7 +4,6 @@ package by.zelenko.micro.restservice.controller;
 import by.zelenko.micro.restservice.Repository.TeacherRepository;
 import by.zelenko.micro.restservice.entity.Teacher;
 import by.zelenko.micro.restservice.exception.NotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +16,13 @@ import java.util.List;
 @Slf4j
 @Service
 @RestController
-//@RequestMapping("/")
+@RequestMapping("/teachers")
 public class TeacherController {
 
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @GetMapping("/teachers")
+    @GetMapping("")
     public ResponseEntity<List<Teacher>> findAllteachers(){
         List<Teacher> teachers = teacherRepository.findAll();
         log.info("Found list teachers");
@@ -39,7 +38,7 @@ public class TeacherController {
         return teacherRepository.getOne(id);
     }
 
-    @PostMapping("/teacher")
+    @PostMapping("")
     public ResponseEntity<Teacher> newTeacher(@RequestBody Teacher teacher) {
         teacherRepository.save(teacher);
         return new ResponseEntity<>(teacher, HttpStatus.CREATED);
