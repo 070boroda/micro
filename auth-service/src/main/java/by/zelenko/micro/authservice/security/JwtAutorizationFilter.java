@@ -34,20 +34,16 @@ public class JwtAutorizationFilter extends BasicAuthenticationFilter {
         log.info("Получили хедэр {} ", header);
         if(header == null || !header.startsWith(TOKEN_PREFIX)){
             chain.doFilter(request, response);
-            log.info("vs cltcm 2");
             return;
         }
-        log.info("vs cltcm 3");
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-        log.info("vs cltcm4");
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("vs cltcm 5");
         chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        log.info("Header get " + token);
+        log.info("Header get {} ", token);
         if (token != null) {
             log.info("try verify token");
             String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
